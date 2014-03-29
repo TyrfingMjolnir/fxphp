@@ -13,49 +13,49 @@
 #                                                                       #
 #########################################################################
 
-define("FX_VERSION", '6.0');                                            // Current version information for FX.php.  New constants as of version 4.0.
-define("FX_VERSION_FULL", 'FX.php version ' . FX_VERSION . ' (3 Feb 2012) by Chris Hansen, Chris Adams, G G Thorsen, Masayuki Nii, and others.');
+define( 'FX_VERSION', '6.0' );                                            // Current version information for FX.php.  New constants as of version 4.0.
+define( 'FX_VERSION_FULL', 'FX.php version ' . FX_VERSION . ' (3 Feb 2012) by Chris Hansen, Chris Adams, G G Thorsen, Masayuki Nii, and others.');
 
-require_once('FX_Error.php');                                           // FX.php includes object based error handling.  See FX_Error.php for more info.
+require_once( 'FX_Error.php' );                                           // FX.php includes object based error handling.  See FX_Error.php for more info.
 
-if (! defined('DEBUG_FUZZY')) {                                         // This version of FX.php includes the FX Fuzzy Debugger (turned off by default.)
-    define('DEBUG_FUZZY', false);
+if( ! defined( 'DEBUG_FUZZY' ) ) {                                         // This version of FX.php includes the FX Fuzzy Debugger (turned off by default.)
+	define( 'DEBUG_FUZZY', false );
 }
 
-require_once('FX_constants.php');                                       // The constants in this file are designed to be used with DoFXAction()
+require_once( 'FX_constants.php' );                                       // The constants in this file are designed to be used with DoFXAction()
 
-define("EMAIL_ERROR_MESSAGES", FALSE);                                  // Set this to TRUE to enable emailing of specific error messages.
-define("DISPLAY_ERROR_MESSAGES", TRUE);                                 // Set this to FALSE to display the $altErrorMessage to the user.
+define( 'EMAIL_ERROR_MESSAGES', FALSE );                                  // Set this to TRUE to enable emailing of specific error messages.
+define( 'DISPLAY_ERROR_MESSAGES', TRUE );                                 // Set this to FALSE to display the $altErrorMessage to the user.
 $webmasterEmailAddress = 'webmaster@yourdomain.com';                    // If you set the above to TRUE, enter the appropriate email address on this line.
 $emailFromAddress = 'you@yourdomain.com';                               // Sets who the error message will show as the sender.
 
-function EmailError ($errorText) {
-    global $webmasterEmailAddress;
-    global $emailFromAddress;
+function EmailError( $errorText ) {
+	global $webmasterEmailAddress;
+	global $emailFromAddress;
 
-    if (EMAIL_ERROR_MESSAGES) {
-        $emailSubject = "PHP Server Error";
-        $emailMessage = "The following error just occured:\r\n\r\nMessage: {$errorText}\r\n\r\n**This is an automated message**";
-        $emailStatus = mail($webmasterEmailAddress, $emailSubject, $emailMessage, "From: $emailFromAddress\r\n");
-    }
+	if( EMAIL_ERROR_MESSAGES ) {
+		$emailSubject = 'PHP Server Error';
+		$emailMessage = 'The following error just occured:' . "\r\n\r\n" . 'Message: {$errorText}' . "\r\n\r\n" . '**This is an automated message**';
+		$emailStatus = mail( $webmasterEmailAddress, $emailSubject, $emailMessage, 'From: $emailFromAddress' . "\r\n" );
+	}
 }
 
-function EmailErrorHandler ($FXErrorObj) {
-    $altErrorMessage = 'The Server was unable to process your request.<br />The WebMaster has been emailed.<br /> Thank you for your patience.';
+function EmailErrorHandler( $FXErrorObj ) {
+	$altErrorMessage = 'The Server was unable to process your request.<br />The WebMaster has been emailed.<br /> Thank you for your patience.';
 
-    EmailError($FXErrorObj->message);
-    if (DISPLAY_ERROR_MESSAGES) {
-        echo($FXErrorObj->message);
-    } else {
-        echo($altErrorMessage);
-    }
-    return true;
+	EmailError( $FXErrorObj->message );
+	if( DISPLAY_ERROR_MESSAGES ) {
+		echo( $FXErrorObj->message );
+	} else {
+		echo( $altErrorMessage );
+	}
+	return true;
 }
 
 class FX {
 
     // These are the basic database variables.
-    var $dataServer = "";
+    var $dataServer = '';
     var $dataServerType = 'fmpro';
     var $dataServerVersion = 7;
     var $dataPort;
